@@ -1,24 +1,35 @@
 
-import sys
+def pair_sum_sorted_rotated(arr, target):
+    n = len(arr)
 
-def max_girls_impressed(N: int, K: int, girls: list[int]) -> int:
-    # Calculate the sum of the first window of size K
-    current_sum = sum(girls[:K])
-    max_sum = current_sum
-    
-    # Slide the window across the array
-    for i in range(K, N):
-        current_sum += girls[i] - girls[i - K]
-        max_sum = max(max_sum, current_sum)
-        
-    return max_sum
+    if n < 2:
+        return False
 
-if __name__ == '__main__':
-    # Reading input from standard input
-    input_data = sys.stdin.read().split()
-    if input_data:
-        N = int(input_data[0])
-        K = int(input_data[1])
-        girls = [int(x) for x in input_data[2:2 + N]]
-        
-        print(max_girls_impressed(N, K, girls))
+    pivot = 0
+
+    for i in range(n - 1):
+        if arr[i] > arr[i + 1]:
+            pivot = i
+            break
+
+    l = (pivot + 1) % n
+    r = pivot
+
+    while l != r:
+        current_sum = arr[l] + arr[r]
+
+        if current_sum == target:
+            return True
+        elif current_sum < target:
+            l = (l + 1) % n
+        else:
+            r = (r - 1 + n) % n
+
+    return False
+
+
+n = int(input())
+arr = list(map(int, input().split()))
+target = int(input())
+
+print(pair_sum_sorted_rotated(arr, target))
