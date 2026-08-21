@@ -1,16 +1,9 @@
 
-i
-def count_good_substrings(s):
+def countGoodSubstrings(s):
     count = 0
 
     for i in range(len(s) - 2):
-        a, b, c = s[i], s[i + 1], s[i + 2]
-
-        if a != b and b != c and a != c:
+        if s[i] != s[i + 1] and s[i] != s[i + 2] and s[i + 1] != s[i + 2]:
             count += 1
 
     return count
-
-
-s = input()
-print(count_good_substrings(s))

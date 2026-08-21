@@ -1,29 +1,22 @@
 
-def pair_sum_sorted_rotated(arr: list[int], target: int) -> bool:
+def pairInSortedRotated(arr, target):
     n = len(arr)
-    if n < 2:
-        return False
 
-    # Find the pivot element (largest element)
-    pivot = 0
-    for i in range(n - 1):
-        if arr[i] > arr[i + 1]:
-            pivot = i
-            break
-            
-    # l is index of smallest element, r is index of largest element
-    r = pivot
-    l = (pivot + 1) % n
+    # Find the position where rotation happens
+    i = 0
+    while i < n - 1 and arr[i] <= arr[i + 1]:
+        i += 1
 
-    # Move pointers around the circular array
-    while l != r:
-        current_sum = arr[l] + arr[r]
-        
-        if current_sum == target:
+    left = (i + 1) % n
+    right = i
+
+    while left != right:
+        if arr[left] + arr[right] == target:
             return True
-        elif current_sum < target:
-            l = (l + 1) % n  # Move to next larger element
+
+        if arr[left] + arr[right] < target:
+            left = (left + 1) % n
         else:
-            r = (r - 1 + n) % n  # Move to next smaller element
+            right = (right - 1 + n) % n
 
     return False

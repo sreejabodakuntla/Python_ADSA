@@ -1,35 +1,11 @@
 
-def pair_sum_sorted_rotated(arr, target):
-    n = len(arr)
 
-    if n < 2:
-        return False
+def The_Great_Run(N, K, arr):
+    max_sum = sum(arr[:K])
+    current_sum = max_sum
 
-    pivot = 0
+    for i in range(K, N):
+        current_sum += arr[i] - arr[i - K]
+        max_sum = max(max_sum, current_sum)
 
-    for i in range(n - 1):
-        if arr[i] > arr[i + 1]:
-            pivot = i
-            break
-
-    l = (pivot + 1) % n
-    r = pivot
-
-    while l != r:
-        current_sum = arr[l] + arr[r]
-
-        if current_sum == target:
-            return True
-        elif current_sum < target:
-            l = (l + 1) % n
-        else:
-            r = (r - 1 + n) % n
-
-    return False
-
-
-n = int(input())
-arr = list(map(int, input().split()))
-target = int(input())
-
-print(pair_sum_sorted_rotated(arr, target))
+    return max_sum
